@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amanda Cristina Dariz | Técnica em Agricultura & Futura Veterinária</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Montserrat & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#08050e',
+                        darkCard: 'rgba(18, 9, 28, 0.65)',
+                        purpleNeon: '#a855f7',
+                        purpleGlow: '#8b5cf6',
+                        purpleDark: '#4c1d95',
+                        purpleAccent: '#c084fc',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'neon': '0 0 20px rgba(168, 85, 247, 0.4)',
+                        'neon-lg': '0 0 35px rgba(168, 85, 247, 0.6)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Customizations & Canvas Setup */
+        body {
+            background-color: #08050e;
+            color: #f3f4f6;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        #smoke-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-panel {
+            background: rgba(18, 10, 30, 0.55);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(168, 85, 247, 0.18);
+        }
+
+        .glass-panel-hover:hover {
+            border-color: rgba(168, 85, 247, 0.5);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
+            transform: translateY(-4px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08050e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b0764;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7e22ce;
+        }
+
+        /* Neon Text Glow */
+        .glow-text {
+            text-shadow: 0 0 12px rgba(168, 85, 247, 0.7), 0 0 24px rgba(140, 40, 220, 0.4);
+        }
+
+        /* Typing Cursor Effect */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-purple-600 selection:text-white">
+
+    <!-- Canvas de Fumaça Animado -->
+    <canvas id="smoke-canvas"></canvas>
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-panel border-b border-purple-900/30">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#home" class="text-2xl font-black font-heading tracking-wider text-white flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-purple-500 shadow-neon inline-block animate-pulse"></span>
+                <span class="bg-gradient-to-r from-purple-400 via-purple-200 to-white bg-clip-text text-transparent">AMANDA<span class="text-purple-500">.</span>DARIZ</span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#home" class="hover:text-purple-400 transition-colors duration-300">Home</a>
+                <a href="#sobre" class="hover:text-purple-400 transition-colors duration-300">Sobre Mim</a>
+                <a href="#projetos" class="hover:text-purple-400 transition-colors duration-300">Projetos & Pesquisas</a>
+                <a href="#habilidades" class="hover:text-purple-400 transition-colors duration-300">Competências</a>
+                <a href="#contato" class="hover:text-purple-400 transition-colors duration-300">Contato</a>
+            </nav>
+
+            <a href="#contato" class="hidden sm:inline-flex px-5 py-2 rounded-full border border-purple-500/50 bg-purple-950/40 hover:bg-purple-600 hover:border-purple-400 text-sm font-semibold transition-all duration-300 shadow-neon">
+                Entre em Contato
+            </a>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="menu-btn" class="md:hidden text-2xl text-purple-300 focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-purple-900/40 px-6 py-6 flex flex-col gap-4 text-center">
+            <a href="#home" class="mobile-link text-lg hover:text-purple-400 py-1">Home</a>
+            <a href="#sobre" class="mobile-link text-lg hover:text-purple-400 py-1">Sobre</a>
+            <a href="#projetos" class="mobile-link text-lg hover:text-purple-400 py-1">Projetos</a>
+            <a href="#habilidades" class="mobile-link text-lg hover:text-purple-400 py-1">Habilidades</a>
+            <a href="#contato" class="mobile-link text-lg hover:text-purple-400 py-1">Contato</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative z-10">
+
+        <!-- HERO SECTION -->
+        <section id="home" class="min-h-screen flex items-center justify-center pt-24 pb-16 px-6">
+            <div class="max-w-4xl mx-auto text-center space-y-8">
+                
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border-purple-500/40 text-purple-300 text-xs font-semibold tracking-wide uppercase shadow-neon">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    Técnica em Agricultura & Futura Veterinária
+                </div>
+
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold font-heading tracking-tight leading-tight">
+                    Olá, eu sou <br>
+                    <span class="bg-gradient-to-r from-purple-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent glow-text">Amanda Cristina Dariz</span>
+                </h1>
+
+                <p class="text-lg sm:text-2xl text-gray-300 font-light max-w-2xl mx-auto h-12 flex justify-center items-center">
+                    <span id="typing-text" class="typing-cursor text-purple-300 font-semibold"></span>
+                </p>
+
+                <p class="text-gray-400 max-w-xl mx-auto text-sm sm:text-base">
+                    Unindo a ciência da agricultura, a inovação no campo e a paixão incondicional pelo cuidado e bem-estar dos animais.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <a href="#projetos" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 font-bold text-white shadow-neon-lg transition-all duration-300 transform hover:-translate-y-1">
+                        Ver Projetos & Estudos <i class="fa-solid fa-seedling ml-2"></i>
+                    </a>
+                    <a href="#contato" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-panel hover:bg-purple-900/30 font-semibold text-purple-200 border border-purple-500/30 transition-all duration-300">
+                        Falar Comigo
+                    </a>
+                </div>
+
+                <!-- Redes Sociais Hero -->
+                <div class="flex justify-center gap-6 pt-8 text-xl text-gray-400">
+                    <a href="#" class="hover:text-purple-400 transition-colors transform hover:scale-125" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-purple-400 transition-colors transform hover:scale-125" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-purple-400 transition-colors transform hover:scale-125" title="E-mail"><i class="fa-solid fa-envelope"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOBRE MIM SECTION -->
+        <section id="sobre" class="py-24 px-6 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                
+                <!-- Card com Imagem / Avatar Neon -->
+                <div class="w-full md:w-1/2 flex justify-center">
+                    <div class="relative w-64 h-64 sm:w-80 sm:h-80">
+                        <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-purple-600 to-purple-900 blur-xl opacity-70 animate-pulse"></div>
+                        <div class="relative w-full h-full glass-panel rounded-3xl p-4 flex flex-col items-center justify-center border-purple-500/40 text-center overflow-hidden">
+                            <div class="w-32 h-32 rounded-full bg-purple-950 border-2 border-purple-400 flex items-center justify-center text-5xl text-purple-300 shadow-neon mb-4">
+                                <i class="fa-solid fa-user-doctor"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-heading">Amanda C. Dariz</h3>
+                            <p class="text-sm text-purple-400">Técnica em Agricultura</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Sobre -->
+                <div class="w-full md:w-1/2 space-y-6">
+                    <div class="inline-block px-3 py-1 rounded-md glass-panel text-xs text-purple-400 font-semibold border-purple-500/30">
+                        MINHA TRAJETÓRIA
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold font-heading text-white">
+                        Do solo à saúde animal: <span class="text-purple-400 glow-text">dedicação ao campo</span>
+                    </h2>
+                    <p class="text-gray-300 leading-relaxed">
+                        Sou <strong>Amanda Cristina Dariz</strong>, formada como Técnica em Agricultura e apaixonada pela agropecuária. Minha base técnica me proporcionou uma compreensão profunda do manejo de solos, nutrição de pastagens, produção sustentável e biotecnologia agrícola.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed text-sm">
+                        Com o olhar voltado para o futuro, estou me preparando para ingressar na **Medicina Veterinária**. Meu objetivo é unir o conhecimento prático da agricultura à medicina preventiva e de precisão, promovendo o bem-estar dos animais e o desenvolvimento rural sustentável.
+                    </p>
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4">
+                        <div class="glass-panel p-4 rounded-xl text-center border-purple-900/40">
+                            <h4 class="text-2xl font-black text-purple-400 font-heading"><i class="fa-solid fa-wheat-awn"></i></h4>
+                            <p class="text-xs text-gray-300 font-bold mt-1">Técnica em Agronomia</p>
+                            <p class="text-[10px] text-gray-400">Manejo & Campo</p>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl text-center border-purple-900/40">
+                            <h4 class="text-2xl font-black text-purple-400 font-heading"><i class="fa-solid fa-stethoscope"></i></h4>
+                            <p class="text-xs text-gray-300 font-bold mt-1">Futura Vet</p>
+                            <p class="text-[10px] text-gray-400">Foco em Grandes Animais</p>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl text-center border-purple-900/40 col-span-2 sm:col-span-1">
+                            <h4 class="text-2xl font-black text-purple-400 font-heading"><i class="fa-solid fa-leaf"></i></h4>
+                            <p class="text-xs text-gray-300 font-bold mt-1">Sustentabilidade</p>
+                            <p class="text-[10px] text-gray-400">Práticas Ecológicas</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PROJETOS SECTION -->
+        <section id="projetos" class="py-24 px-6 max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto space-y-4 mb-16">
+                <div class="inline-block px-3 py-1 rounded-md glass-panel text-xs text-purple-400 font-semibold border-purple-500/30">
+                    CAMPOS DE ATUAÇÃO & PROJETOS
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold font-heading text-white">
+                    Estudos & <span class="text-purple-400 glow-text">Projetos no Agro</span>
+                </h2>
+                <p class="text-gray-400 text-sm">
+                    Conheça algumas das áreas e projetos voltados ao manejo agrícola, pecuária de precisão e bem-estar animal.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Card Projeto 1 -->
+                <div class="glass-panel glass-panel-hover rounded-2xl overflow-hidden transition-all duration-300 group">
+                    <div class="relative h-48 overflow-hidden bg-purple-950/60">
+                        <img src="https://placehold.co/600x400/12091c/a855f7?text=Manejo+Bovino+e+Saude" alt="Monitoramento Animal" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/12091c/a855f7?text=Manejo+Bovino+e+Saude'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#08050e] via-transparent to-transparent opacity-80"></div>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex gap-2">
+                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-purple-900/50 text-purple-300 border border-purple-500/30">Pecuária</span>
+                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-purple-900/50 text-purple-300 border border-purple-500/30">Saúde Animal</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">Monitoramento Sanitário Bovina</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            Estudo e acompanhamento preventivo da saúde do rebanho, calendário vacinal e identificação precoce de zoonoses e patologias.
+                        </p>
+                        <div class="flex justify-between items-center pt-2">
+                            <span class="text-xs font-semibold text-purple-400 flex items-center gap-1">
+                                Pesquisa & Manejo <i class="fa-solid fa-cow ml-1"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Projeto 2 -->
+                <div class="glass-panel glass-panel-hover rounded-2xl overflow-hidden transition-all duration-300 group">
+                    <div class="relative h-48 overflow-hidden bg-purple-950/60">
+                        <img src="https://placehold.co/600x400/1a0b2e/c084fc?text=Nutricao+e+Pastagem" alt="Nutrição Pastoril" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/1a0b2e/c084fc?text=Nutricao+e+Pastagem'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#08050e] via-transparent to-transparent opacity-80"></div>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex gap-2">
+                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-purple-900/50 text-purple-300 border border-purple-500/30">Agronomia</span>
+                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-purple-900/50 text-purple-300 border border-purple-500/30">Pastagem</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">Planejamento Forrageiro & Solos</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            Análise de fertilidade do solo, rotatividade de pastos e suplementação nutricional otimizada para pecuária de alto rendimento.
+                        </p>
+                        <div class="flex justify-between items-center pt-2">
+                            <span class="text-xs font-semibold text-purple-400 flex items-center gap-1">
+                                Análise Agrícola <i class="fa-solid fa-seedling ml-1"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Projeto 3 -->
+                <div class="glass-panel glass-panel-hover rounded-2xl overflow-hidden transition-all duration-300 group">
+                    <div class="relative h-48 overflow-hidden bg-purple-950/60">
+                        <img src="https://placehold.co/600x400/0a0314/8b5cf6?text=Biol%C3%B3gico+e+Controle" alt="Controle Fitossanitário" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/0a0314/8b5cf6?text=Biol%C3%B3gico+e+Controle'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#08050e] via-transparent to-transparent opacity-80"></div>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex gap-2">
+                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-purple-900/50 text-purple-300 border border-purple-500/30">Sustentabilidade</span>
+                            <span class="text-[10px] font-bold px-2 py-1 rounded bg-purple-900/50 text-purple-300 border border-purple-500/30">Fitossanidade</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">Controle Fitossanitário Integrado</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">
+                            Aplicação de práticas ecológicas para manejo de pragas e doenças em lavouras, reduzindo impactos ambientais.
+                        </p>
+                        <div class="flex justify-between items-center pt-2">
+                            <span class="text-xs font-semibold text-purple-400 flex items-center gap-1">
+                                Proteção de Lavouras <i class="fa-solid fa-plant-wilt ml-1"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- HABILIDADES (SKILLS) SECTION -->
+        <section id="habilidades" class="py-24 px-6 max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto space-y-4 mb-16">
+                <div class="inline-block px-3 py-1 rounded-md glass-panel text-xs text-purple-400 font-semibold border-purple-500/30">
+                    CONHECIMENTOS & ESPECIALIDADES
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold font-heading text-white">
+                    Minhas <span class="text-purple-400 glow-text">Habilidades Técnicas</span>
+                </h2>
+                <p class="text-gray-400 text-sm">
+                    Competências desenvolvidas no curso técnico em agricultura e práticas voltadas ao campo.
+                </p>
+            </div>
+
+            <!-- Grid de Habilidades Agro / Vet -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                
+                <!-- Skill Card 1 -->
+                <div class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center text-center space-y-3 glass-panel-hover transition-all">
+                    <i class="fa-solid fa-cow text-4xl text-purple-400"></i>
+                    <h4 class="font-bold text-white text-sm">Manejo Animal</h4>
+                    <div class="w-full bg-purple-950/80 rounded-full h-1.5 overflow-hidden border border-purple-800/40">
+                        <div class="bg-purple-500 h-full rounded-full shadow-neon" style="width: 95%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 2 -->
+                <div class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center text-center space-y-3 glass-panel-hover transition-all">
+                    <i class="fa-solid fa-wheat-awn text-4xl text-amber-400"></i>
+                    <h4 class="font-bold text-white text-sm">Culturas Agrícolas</h4>
+                    <div class="w-full bg-purple-950/80 rounded-full h-1.5 overflow-hidden border border-purple-800/40">
+                        <div class="bg-purple-500 h-full rounded-full shadow-neon" style="width: 90%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 3 -->
+                <div class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center text-center space-y-3 glass-panel-hover transition-all">
+                    <i class="fa-solid fa-vial-circle-check text-4xl text-emerald-400"></i>
+                    <h4 class="font-bold text-white text-sm">Análise de Solos</h4>
+                    <div class="w-full bg-purple-950/80 rounded-full h-1.5 overflow-hidden border border-purple-800/40">
+                        <div class="bg-purple-500 h-full rounded-full shadow-neon" style="width: 88%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 4 -->
+                <div class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center text-center space-y-3 glass-panel-hover transition-all">
+                    <i class="fa-solid fa-heart-pulse text-4xl text-rose-400"></i>
+                    <h4 class="font-bold text-white text-sm">Bem-Estar Animal</h4>
+                    <div class="w-full bg-purple-950/80 rounded-full h-1.5 overflow-hidden border border-purple-800/40">
+                        <div class="bg-purple-500 h-full rounded-full shadow-neon" style="width: 95%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 5 -->
+                <div class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center text-center space-y-3 glass-panel-hover transition-all">
+                    <i class="fa-solid fa-shield-virus text-4xl text-cyan-400"></i>
+                    <h4 class="font-bold text-white text-sm">Fitossanidade</h4>
+                    <div class="w-full bg-purple-950/80 rounded-full h-1.5 overflow-hidden border border-purple-800/40">
+                        <div class="bg-purple-500 h-full rounded-full shadow-neon" style="width: 82%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 6 -->
+                <div class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center text-center space-y-3 glass-panel-hover transition-all">
+                    <i class="fa-solid fa-apple-whole text-4xl text-red-400"></i>
+                    <h4 class="font-bold text-white text-sm">Nutrição de Pastagens</h4>
+                    <div class="w-full bg-purple-950/80 rounded-full h-1.5 overflow-hidden border border-purple-800/40">
+                        <div class="bg-purple-500 h-full rounded-full shadow-neon" style="width: 85%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 7 -->
+                <div class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center text-center space-y-3 glass-panel-hover transition-all">
+                    <i class="fa-solid fa-tractor text-4xl text-indigo-400"></i>
+                    <h4 class="font-bold text-white text-sm">Gestão Rural</h4>
+                    <div class="w-full bg-purple-950/80 rounded-full h-1.5 overflow-hidden border border-purple-800/40">
+                        <div class="bg-purple-500 h-full rounded-full shadow-neon" style="width: 80%"></div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 8 -->
+                <div class="glass-panel p-6 rounded-xl flex flex-col items-center justify-center text-center space-y-3 glass-panel-hover transition-all">
+                    <i class="fa-solid fa-microscope text-4xl text-purple-300"></i>
+                    <h4 class="font-bold text-white text-sm">Iniciação Veterinária</h4>
+                    <div class="w-full bg-purple-950/80 rounded-full h-1.5 overflow-hidden border border-purple-800/40">
+                        <div class="bg-purple-500 h-full rounded-full shadow-neon" style="width: 90%"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CONTATO SECTION -->
+        <section id="contato" class="py-24 px-6 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <div class="space-y-6">
+                    <div class="inline-block px-3 py-1 rounded-md glass-panel text-xs text-purple-400 font-semibold border-purple-500/30">
+                        CONTATO
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold font-heading text-white">
+                        Vamos conversar sobre o <span class="text-purple-400 glow-text">futuro do Agro?</span>
+                    </h2>
+                    <p class="text-gray-300 leading-relaxed text-sm sm:text-base">
+                        Seja para trocar ideias sobre agricultura sustentável, manejo animal ou projetos no campo, estou sempre à disposição!
+                    </p>
+
+                    <div class="space-y-4 pt-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl glass-panel border-purple-500/40 flex items-center justify-center text-purple-400 text-xl shadow-neon">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-xs text-gray-400">Email</h5>
+                                <p class="text-sm font-semibold text-white">amanda.dariz@exemplo.com</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl glass-panel border-purple-500/40 flex items-center justify-center text-purple-400 text-xl shadow-neon">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-xs text-gray-400">Atuação</h5>
+                                <p class="text-sm font-semibold text-white">Brasil — Agricultura & Veterinária</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulário -->
+                <div class="glass-panel p-8 rounded-3xl border border-purple-500/30 shadow-neon">
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label class="block text-xs font-semibold text-purple-300 mb-2">SEU NOME</label>
+                            <input type="text" required placeholder="Digite seu nome" class="w-full bg-purple-950/40 border border-purple-800/50 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-purple-300 mb-2">SEU EMAIL</label>
+                            <input type="email" required placeholder="seuemail@exemplo.com" class="w-full bg-purple-950/40 border border-purple-800/50 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-purple-300 mb-2">SUA MENSAGEM</label>
+                            <textarea rows="4" required placeholder="Como posso ajudar em seu projeto agrícola ou animal?" class="w-full bg-purple-950/40 border border-purple-800/50 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 transition resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 font-bold text-white shadow-neon transition duration-300">
+                            Enviar Mensagem <i class="fa-solid fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+
+                    <!-- Caixa de Feedback customizada -->
+                    <div id="form-message" class="hidden mt-4 p-4 rounded-xl bg-purple-900/60 border border-purple-400 text-purple-200 text-center text-sm font-semibold">
+                        ✨ Mensagem enviada com sucesso! Entrarei em contato em breve.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+        <!-- FOOTER -->
+        <footer class="glass-panel border-t border-purple-900/30 py-8 px-6 text-center text-xs text-gray-500">
+            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p>© 2026 Amanda Cristina Dariz — Técnica em Agricultura & Futura Médica Veterinária.</p>
+                <p class="flex items-center gap-1">
+                    Desenvolvido com <i class="fa-solid fa-heart text-purple-500"></i> e fumaça roxa.
+                </p>
+            </div>
+        </footer>
+
+    <!-- JAVASCRIPT: Efeito Typing, Mobile Menu e Fumaça em HTML5 Canvas -->
+    <script>
+        // 1. Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 2. Typing Effect (Efeito de Digitação Automática)
+        const typingText = document.getElementById('typing-text');
+        const phrases = [
+            'Técnica em Agricultura',
+            'Futura Médica Veterinária',
+            'Especialista em Manejo & Produção',
+            'Apaixonada pelo Bem-Estar Animal'
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                typingText.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingText.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 40 : 80;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2000; // Pausa no final
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+
+        typeEffect();
+
+        // 3. Form Submit Feedback (Sem uso de alert)
+        const contactForm = document.getElementById('contact-form');
+        const formMessage = document.getElementById('form-message');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            formMessage.classList.remove('hidden');
+            contactForm.reset();
+            setTimeout(() => {
+                formMessage.classList.add('hidden');
+            }, 5000);
+        });
+
+        // 4. Interactive Purple Smoke Particle Canvas Animation
+        const canvas = document.getElementById('smoke-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth
